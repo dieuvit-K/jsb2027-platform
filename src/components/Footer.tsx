@@ -35,7 +35,10 @@ export function Footer() {
         </div>
       </div>
       <div className="mx-auto mt-8 max-w-6xl border-t border-forest-700 px-4 pt-4 text-center text-xs text-forest-100/50">
-        © 2026 {eventSettings.organizer} — Tous droits réservés
+        © 2026 {eventSettings.organizer} — Tous droits réservés ·{' '}
+        <Link to="/admin" className="text-forest-100/40 transition hover:text-gold-300">
+          Administration
+        </Link>
       </div>
     </footer>
   )
