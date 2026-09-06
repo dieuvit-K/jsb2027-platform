@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { LockIcon } from 'lucide-react'
 import { eventSettings } from '../config/event'
 
 export function Footer() {
@@ -34,10 +35,14 @@ export function Footer() {
           </p>
         </div>
       </div>
-      <div className="mx-auto mt-8 max-w-6xl border-t border-forest-700 px-4 pt-4 text-center text-xs text-forest-100/50">
-        © 2026 {eventSettings.organizer} — Tous droits réservés ·{' '}
-        <Link to="/admin" className="text-forest-100/40 transition hover:text-gold-300">
-          Administration
+      <div className="mx-auto mt-8 flex max-w-6xl flex-col items-center justify-between gap-3 border-t border-forest-700 px-4 pt-4 text-center text-xs text-forest-100/50 sm:flex-row">
+        <span>© 2026 {eventSettings.organizer} — Tous droits réservés</span>
+        <Link
+          to="/admin"
+          className="inline-flex items-center gap-1.5 rounded-full border border-forest-600 bg-forest-700/60 px-4 py-1.5 font-medium text-gold-300 transition hover:border-gold-400/50 hover:bg-forest-700 hover:text-gold-200"
+        >
+          <LockIcon className="h-3.5 w-3.5" />
+          Espace administration
         </Link>
       </div>
     </footer>
