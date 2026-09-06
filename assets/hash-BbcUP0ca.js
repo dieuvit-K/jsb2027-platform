@@ -1,0 +1,1 @@
+async function e(e){let t=e.trim().toLowerCase(),n=new TextEncoder().encode(t),r=await crypto.subtle.digest(`SHA-256`,n);return[...new Uint8Array(r)].map(e=>e.toString(16).padStart(2,`0`)).join(``)}function t(e,t=12,n=4){return e.length<=t+n?e:`${e.slice(0,t)}…${e.slice(-n)}`}export{e as n,t};

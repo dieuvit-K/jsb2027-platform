@@ -1,0 +1,1 @@
+function e(e=24){let t=new Uint8Array(e);crypto.getRandomValues(t);let n=``;for(let r=0;r<e;r++)n+=`ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789`[t[r]%56];return n}export{e as t};

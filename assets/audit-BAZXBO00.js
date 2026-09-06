@@ -1,0 +1,1 @@
+import{f as e,t}from"./index-DUAA47rv.js";async function n(n,r,i,a){let o=t.session(),s={editionId:`jsb-2027`,userId:o?.userId??`anonymous`,userEmail:o?.email??`system`,action:n,resourceType:r,resourceId:i,metadata:a,createdAt:0,updatedAt:0};await e.auditLogs.add(s)}export{n as t};
