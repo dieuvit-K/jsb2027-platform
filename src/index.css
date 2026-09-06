@@ -1,0 +1,25 @@
+@import 'tailwindcss';
+
+/* Identité visuelle EKBF / JSB — vert profond + or */
+@theme {
+  --color-forest-50: #eef7f2;
+  --color-forest-100: #d5ebdd;
+  --color-forest-500: #0a3d2a;
+  --color-forest-600: #083322;
+  --color-forest-700: #06281b;
+  --color-forest-800: #041d14;
+  --color-forest-900: #031510;
+  --color-gold-300: #ddc583;
+  --color-gold-400: #c9a84c;
+  --color-gold-500: #b8933a;
+  --font-serif: Georgia, 'Times New Roman', serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-forest-800 antialiased;
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+}
