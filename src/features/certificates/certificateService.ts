@@ -28,5 +28,6 @@ export async function findCertificateByToken(token: string): Promise<Certificate
 }
 
 export function verifyCertificateUrl(token: string): string {
-  return `${window.location.origin}/verify/certificate/${token}`
+  const base = import.meta.env.BASE_URL ?? '/'
+  return `${window.location.origin}${base}verify/certificate/${token}`
 }

@@ -68,7 +68,8 @@ export async function logEmail(
   return entry
 }
 
-/** Lien public de vérification d'un badge. */
+/** Lien public de vérification d'un badge (inclut le chemin de base). */
 export function verifyBadgeUrl(token: string): string {
-  return `${window.location.origin}/verify/${token}`
+  const base = import.meta.env.BASE_URL ?? '/'
+  return `${window.location.origin}${base}verify/${token}`
 }

@@ -6,6 +6,9 @@ import { isSeeded, seedDemoData } from './services/store'
 import { authApi } from './services/auth'
 import './index.css'
 
+/** Basename = chemin de base Vite (ex. '/jsb2027-platform/' sur GitHub Pages). */
+const basename = import.meta.env.BASE_URL
+
 function Boot({ children }: { children: React.ReactNode }) {
   const [ready, setReady] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -44,7 +47,7 @@ function Boot({ children }: { children: React.ReactNode }) {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <Boot>
         <App />
       </Boot>
