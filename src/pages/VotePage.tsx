@@ -1,9 +1,4 @@
-/**
- * Page publique — Vote du public « Coup de cœur » (route /vote).
- * Une adresse e-mail = un vote. Vérification par code (démo locale) + journalisation e-mail.
- * Aucun résultat ni note du comité n'est affiché ici.
- */
-
+import confetti from 'canvas-confetti'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AlertTriangle, CheckCircle2, KeyRound, RotateCcw } from 'lucide-react'
@@ -11,7 +6,8 @@ import { Button, Card, EmptyState, Field, Input, LoadingState, PageHeader, Spinn
 import { db, settingsApi } from '../services/store'
 import { audit } from '../services/audit'
 import { logEmail } from '../features/badges/badgeService'
-import { isValidEmail, normalizeEmail } from '../utils/helpers'
+import { isValidEmail } from '../utils/helpers'
+import { sha256Hex } from '../lib/hash'
 import type { Candidate } from '../types'
 
 type Step = 'choose' | 'email' | 'verify' | 'success'
@@ -74,7 +70,7 @@ export default function VotePage() {
       setSentTo(email.trim())
       await logEmail(
         'VoteVerificationCode',
-        normalizeEmail(email),
+        email.trim().toLowerCase(),
         'Code de vérification — Vote JSB 2027',
         `Votre code de vérification pour le vote du public (Coup de cœur) est : ${codeValue}`,
       )
@@ -96,14 +92,17 @@ export default function VotePage() {
         setCodeError('Le code saisi est incorrect. Veuillez réessayer.')
         return
       }
-      const norm = normalizeEmail(email)
-      const existing = await db.votes.find((v) => normalizeEmail(v.email) === norm)
+      // Anti-fraude : l'e-mail n'est jamais stocké en clair — seul son hash SHA-256 est conservé.
+      // Une adresse e-mail = un vote (contrôle côté code, jamais uniquement l'UI).
+      const emailHash = await sha256Hex(email)
+      const existing = await db.votes.find((v) => v.emailHash === emailHash)
       if (existing.length > 0) {
         setFormError('Cette adresse e-mail a déjà voté. Un seul vote par adresse est autorisé.')
         return
       }
-      await db.votes.add({ editionId: 'jsb-2027', email: norm, candidateId: selected.id, verified: true })
-      await audit('public_vote', 'candidate', selected.id, { email: norm })
+      await db.votes.add({ editionId: 'jsb-2027', emailHash, candidateId: selected.id, verified: true })
+      await audit('public_vote', 'candidate', selected.id, { emailHash: emailHash.slice(0, 12) })
+      confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } })
       setStep('success')
     } finally {
       setBusy(false)
@@ -114,7 +113,7 @@ export default function VotePage() {
     <main className="mx-auto max-w-3xl px-4 py-12">
       <PageHeader
         title="Coup de cœur du public"
-        subtitle="Votez pour le projet qui vous a le plus marqué. Une adresse e-mail = un vote — votre adresse ne sera jamais publiée."
+        subtitle="Votez pour le projet qui vous a le plus marqué. Une adresse e-mail = un vote — votre adresse est hachée (SHA-256) et ne sera jamais publiée."
       />
 
       {loading ? (

@@ -11,15 +11,14 @@ import { db, settingsApi } from '../../services/store'
 import { audit } from '../../services/audit'
 import { useCollection } from '../../hooks/useCollection'
 import { downloadTextFile, formatDateTimeFr, toCsv } from '../../utils/helpers'
+import { maskHash } from '../../lib/hash'
 import type { EventSettings } from '../../types'
 
 const RECENT_LIMIT = 50
 
-/** Masque partiellement l'e-mail : a***@domaine */
-function maskEmail(email: string): string {
-  const at = email.indexOf('@')
-  if (at <= 0) return email
-  return `${email[0]}***@${email.slice(at + 1)}`
+/** Libellé d'un votant : hash masqué (l'e-mail n'est jamais stocké en clair). */
+function maskEmail(hash: string): string {
+  return maskHash(hash)
 }
 
 export default function VotesAdminPage() {
@@ -86,7 +85,7 @@ export default function VotesAdminPage() {
     const rows = sortedVotes.map((v) => {
       const c = candById.get(v.candidateId)
       return {
-        'E-mail': v.email,
+        'Votant (hash)': maskEmail(v.emailHash),
         'Projet': c?.projectTitle ?? 'Projet inconnu',
         'Référence candidat': c?.reference ?? '',
         'Vérifié': v.verified ? 'Oui' : 'Non',
@@ -250,7 +249,7 @@ export default function VotesAdminPage() {
                       const c = candById.get(v.candidateId)
                       return (
                         <tr key={v.id} className="hover:bg-forest-50/40">
-                          <td className="px-6 py-2.5 font-mono text-xs text-forest-700">{maskEmail(v.email)}</td>
+                          <td className="px-6 py-2.5 font-mono text-xs text-forest-700">{maskEmail(v.emailHash)}</td>
                           <td className="px-4 py-2.5 text-forest-700">
                             {c ? `${c.firstName} ${c.lastName} — ${c.projectTitle}` : 'Projet inconnu'}
                           </td>

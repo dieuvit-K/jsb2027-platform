@@ -34,6 +34,7 @@ const ContentAdminPage = lazy(() => import('./pages/admin/ContentAdminPage'))
 const VotesAdminPage = lazy(() => import('./pages/admin/VotesAdminPage'))
 const BadgesAdminPage = lazy(() => import('./pages/admin/BadgesAdminPage'))
 const CertificatesAdminPage = lazy(() => import('./pages/admin/CertificatesAdminPage'))
+const EvaluationAdminPage = lazy(() => import('./pages/admin/EvaluationAdminPage'))
 const EmailLogsAdminPage = lazy(() => import('./pages/admin/EmailLogsAdminPage'))
 const AuditLogsAdminPage = lazy(() => import('./pages/admin/AuditLogsAdminPage'))
 
@@ -85,6 +86,7 @@ export default function App() {
           <Route index element={<DashboardPage />} />
           <Route path="participants" element={<ParticipantsAdminPage />} />
           <Route path="candidatures" element={<CandidatesAdminPage />} />
+          <Route path="evaluation" element={<EvaluationAdminPage />} />
           <Route path="sponsors" element={<SponsorsAdminPage />} />
           <Route path="organisations" element={<OrganizationsAdminPage />} />
           <Route path="programme" element={<ProgramAdminPage />} />

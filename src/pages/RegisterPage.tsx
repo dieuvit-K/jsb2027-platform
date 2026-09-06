@@ -6,6 +6,11 @@ import { logEmail } from '../features/badges/badgeService'
 import { db, settingsApi } from '../services/store'
 import type { EventSettings } from '../types'
 import { isValidEmail, isValidPhone, makeReference, normalizeEmail } from '../utils/helpers'
+import { ACADEMIC_INSTITUTIONS } from '../config/academic'
+
+/** Suggestions officielles (référentiel UMNG) pour les champs libres. */
+const INSTITUTIONS_LIST = ACADEMIC_INSTITUTIONS.map((i) => i.name)
+const FACULTIES_LIST = ACADEMIC_INSTITUTIONS.flatMap((i) => i.faculties.map((f) => f.name))
 
 const STATUS_OPTIONS = [
   'Étudiant (Licence)',
@@ -321,6 +326,16 @@ export default function RegisterPage() {
                 )}
 
                 <form onSubmit={handleSubmit} noValidate className="mt-6 grid gap-5 sm:grid-cols-2">
+                  <datalist id="institutions-list">
+                    {INSTITUTIONS_LIST.map((name) => (
+                      <option key={name} value={name} />
+                    ))}
+                  </datalist>
+                  <datalist id="faculties-list">
+                    {FACULTIES_LIST.map((name) => (
+                      <option key={name} value={name} />
+                    ))}
+                  </datalist>
                   <Field label="Prénom" required error={errors.firstName}>
                     <Input
                       value={form.firstName}
@@ -378,6 +393,7 @@ export default function RegisterPage() {
                         value={form.institution}
                         onChange={(e) => update({ institution: e.target.value })}
                         placeholder="ex. : Université Marien Ngouabi"
+                        list="institutions-list"
                       />
                     </Field>
                   </div>
@@ -388,6 +404,7 @@ export default function RegisterPage() {
                         value={form.faculty}
                         onChange={(e) => update({ faculty: e.target.value })}
                         placeholder="ex. : Faculté des Sciences et Techniques"
+                        list="faculties-list"
                       />
                     </Field>
                   </div>

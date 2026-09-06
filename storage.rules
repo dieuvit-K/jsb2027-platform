@@ -1,0 +1,35 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (request.auth.token.role == 'SUPER_ADMIN' || request.auth.token.role == 'ADMIN');
+    }
+
+    function isCommittee() {
+      return isAuthenticated() &&
+        (isAdmin() || request.auth.token.role == 'SCIENTIFIC_COMMITTEE');
+    }
+
+    // Documents de candidature (PDF, max 5 Mo) — lecture privée (comité + admin)
+    match /applications/{candidateId}/{document} {
+      allow read: if isCommittee();
+      allow create: if request.resource.contentType == 'application/pdf'
+                    && request.resource.size < 5 * 1024 * 1024;
+      allow update, delete: if isAdmin();
+    }
+
+    // Logos des sponsors (images max 2 Mo) — visibles publiquement
+    match /sponsor-logos/{sponsorId}/{logo} {
+      allow read: if true;
+      allow create: if request.resource.contentType.matches('image/.*')
+                    && request.resource.size < 2 * 1024 * 1024;
+      allow update, delete: if isAdmin();
+    }
+  }
+}

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
+    "canvas-confetti": "^1.9.4",
     "lucide-react": "^1.41.0",
     "qrcode": "^1.5.4",
     "react": "^19.2.8",
@@ -19,6 +20,7 @@
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
+    "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^24.13.3",
     "@types/qrcode": "^1.5.6",
     "@types/react": "^19.2.18",

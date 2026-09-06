@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, Navigate, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import {
+  Award,
   BadgeCheck,
   Building2,
   CalendarDays,
@@ -25,6 +26,7 @@ const navItems: { to: string; label: string; icon: LucideIcon; end?: boolean }[]
   { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, end: true },
   { to: '/admin/participants', label: 'Participants', icon: Users },
   { to: '/admin/candidatures', label: 'Candidatures', icon: ClipboardList },
+  { to: '/admin/evaluation', label: 'Évaluation', icon: Award },
   { to: '/admin/sponsors', label: 'Sponsors', icon: Handshake },
   { to: '/admin/organisations', label: 'Organisations', icon: Building2 },
   { to: '/admin/programme', label: 'Programme', icon: CalendarDays },

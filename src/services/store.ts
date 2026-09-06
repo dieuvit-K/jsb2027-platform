@@ -14,6 +14,7 @@ import type {
   Candidate,
   CertificateDoc,
   EmailLogEntry,
+  Evaluation,
   EventSettings,
   FaqItem,
   OrganizationMember,
@@ -101,6 +102,7 @@ export const db = {
   users: collection<AdminUser>('users'),
   auditLogs: collection<AuditLogEntry>('auditLogs'),
   emailLogs: collection<EmailLogEntry>('emailLogs'),
+  evaluations: collection<Evaluation>('evaluations'),
 }
 
 /* ---------- Settings ---------- */

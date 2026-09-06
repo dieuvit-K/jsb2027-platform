@@ -126,7 +126,8 @@ export interface Award extends BaseDoc {
 
 /* ---------- Vote ---------- */
 export interface Vote extends BaseDoc {
-  email: string
+  /** Hash SHA-256 de l'e-mail (jamais l'e-mail en clair — anti-fraude + vie privée). */
+  emailHash: string
   candidateId: string
   verified: boolean
   verificationCode?: string
@@ -177,6 +178,25 @@ export interface AuditLogEntry extends BaseDoc {
   resourceType: string
   resourceId: string
   metadata?: Record<string, unknown>
+}
+
+/* ---------- Évaluation comité scientifique ---------- */
+export interface EvaluationScores {
+  originality: number
+  methodology: number
+  clarity: number
+  applicability: number
+  mastery: number
+}
+
+export interface Evaluation extends BaseDoc {
+  candidateId: string
+  evaluatorName: string
+  scores: EvaluationScores
+  averageScore: number
+  comments: string
+  distinctionsNominated: string[]
+  isLocked: boolean
 }
 
 /* ---------- Événement / édition ---------- */

@@ -44,6 +44,12 @@ export default function SponsorsPage() {
         <div className="mx-auto grid max-w-6xl gap-6 px-4 py-8 md:grid-cols-2">
           <div>
             <Badge tone="gold">Partenaire officiel</Badge>
+            <img
+              src={`${import.meta.env.BASE_URL}assets/partners/anvri.png`}
+              alt="Logo ANVRI"
+              className="mt-4 h-16 w-auto object-contain"
+              loading="lazy"
+            />
             <h2 className="mt-3 font-serif text-2xl font-bold text-forest-500">
               {eventSettings.partner}
             </h2>
@@ -90,6 +96,14 @@ export default function SponsorsPage() {
                   <h3 className="mt-3 font-serif text-xl font-bold text-forest-500">
                     {s.organizationName}
                   </h3>
+                  {s.organizationName === 'ANVRI' && (
+                    <img
+                      src={`${import.meta.env.BASE_URL}assets/partners/anvri.png`}
+                      alt="Logo ANVRI"
+                      className="mt-3 h-14 w-14 rounded-xl object-contain"
+                      loading="lazy"
+                    />
+                  )}
                   {s.description && (
                     <p className="mt-2 text-sm leading-relaxed text-forest-700/80">{s.description}</p>
                   )}
